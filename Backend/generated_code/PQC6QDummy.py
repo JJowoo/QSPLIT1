@@ -14,3 +14,4 @@ class PQC6QDummy(nn.Module):
             for i in range(6):
                 tq.functional.rx(self.qdevice, wires=i, params=x[b][i])
         return self.qdevice.get_states_1d()
+    #213425425
