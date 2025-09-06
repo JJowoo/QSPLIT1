@@ -235,12 +235,24 @@ if __name__ == "__main__":
           '>: Filename: $filename, Size: ${(size / 1024).toStringAsFixed(2)} KB');
     });
 
+    if (selectedTargetCodes.isEmpty) {
+      setState(() {
+        log.add('>: [Upload] ❌ Error: No target part selected for upload.');
+      });
+      return;
+    }
+    final part = selectedTargetCodes.first.toLowerCase();
+    log.add('>: [Upload] Target part: $part');
+
     try {
       // multipart/form-data 요청 생성
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://127.0.0.1:8000/api/file/upload-python'),
+        Uri.parse('http://127.0.0.1:8000/upload-code'),
       );
+
+      // 'part' 필드 추가
+      request.fields['part'] = part;
 
       // 파일 내용을 바이트로 변환
       var contentBytes = utf8.encode(content);
@@ -274,10 +286,11 @@ if __name__ == "__main__":
         final responseData = jsonDecode(responseBody);
         setState(() {
           log.add('>: [Upload] ✅ Python file upload successful!');
-          log.add('>: Saved filename: ${responseData['filename']}');
-          log.add('>: File path: ${responseData['file_path']}');
-          log.add(
-              '>: File size: ${(responseData['file_size'] / 1024).toStringAsFixed(2)} KB');
+          log.add('>: Part: ${responseData['part']}');
+          log.add('>: Saved as: ${responseData['saved_as']}');
+          log.add('>: Bytes: ${responseData['bytes']}');
+          log.add('>: SHA256: ${responseData['sha256']}');
+          log.add('>: Message: ${responseData['message']}');
         });
       } else {
         setState(() {
