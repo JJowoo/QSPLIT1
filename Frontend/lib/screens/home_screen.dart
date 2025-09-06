@@ -27,7 +27,7 @@ class _QuantumHomePageState extends State<QuantumHomePage> {
   int numberOfDummies = 5;
   List<Map<String, dynamic>> dummyData = [];
   final log = <String>['>: Ready.'];
-  String selectedDummyCode = 'PQC'; // DummyGeneration용 단일 선택 상태
+  String selectedDummyCode = ''; // DummyGeneration용 단일 선택 상태
   WebSocketChannel? _logChannel;
 
   final nQubitsController = TextEditingController(text: '6');
@@ -118,19 +118,17 @@ class _QuantumHomePageState extends State<QuantumHomePage> {
       return;
     }
 
-    final dummyList = dummyData.map((e) => e['dummy_id'] as String).toList();
-    final int positionalIndex = dummyList.indexOf(selectedDummyCode);
-
-    if (positionalIndex == -1) {
+    final int? index = int.tryParse(selectedDummyCode);
+    if (index == null) {
       setState(() {
-        log.add('>: [Export] ❌ Error: Selected dummy code not found in list.');
+        log.add('>: [Export] ❌ Error: Invalid dummy code format.');
       });
       return;
     }
 
     final nQubits = nQubitsController.text;
     final url =
-        'http://127.0.0.1:8000/download-dummy/$positionalIndex?n_qubits=$nQubits&include_info=true&allow_partial=true';
+        'http://127.0.0.1:8000/download-dummy/$index?n_qubits=$nQubits&include_info=true&allow_partial=true';
 
     setState(() {
       log.add('>: [Export] Requesting download from: $url');
@@ -425,6 +423,12 @@ if __name__ == "__main__":
             } else {
               dummyData = [];
             }
+          }
+
+          if (dummyData.isNotEmpty) {
+            selectedDummyCode = dummyData.first['dummy_id'] as String;
+          } else {
+            selectedDummyCode = '';
           }
         });
       } else {
