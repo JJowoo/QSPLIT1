@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../widgets/code_layer.dart';
@@ -88,15 +89,11 @@ class _QuantumHomePageState extends State<QuantumHomePage> {
     });
 
     final queryParams = {
-      'target_parts': selectedTargetCodes
-          .map((code) => code == 'SE' ? 'encoder' : code)
-          .join(','),
+      'target_parts': selectedTargetCodes.map((code) => code.toLowerCase()).join(','),
       'n_qubits': nQubitsController.text,
       'variant_counts': '3',
       'sample_count': '5',
-      'dummy_codes': selectedDummyCodes
-          .map((code) => code == 'SE' ? 'encoder' : code)
-          .join(','),
+      'dummy_codes': selectedDummyCodes.map((code) => code.toLowerCase()).join(','),
       'layer': selectedLayer,
       'batch_size': batchSizeController.text,
       'device': deviceController.text,
@@ -111,8 +108,51 @@ class _QuantumHomePageState extends State<QuantumHomePage> {
 
   Future<void> exportDummyWeights() async {
     setState(() {
-      log.add('>: [Export] Export 버튼 클릭됨. (API 연동 예정)');
+      log.add('>: [Export] Starting dummy bundle export...');
     });
+
+    if (selectedDummyCode.isEmpty) {
+      setState(() {
+        log.add('>: [Export] ❌ Error: No dummy code selected for export.');
+      });
+      return;
+    }
+
+    final dummyList = dummyData.map((e) => e['dummy_id'] as String).toList();
+    final int positionalIndex = dummyList.indexOf(selectedDummyCode);
+
+    if (positionalIndex == -1) {
+      setState(() {
+        log.add('>: [Export] ❌ Error: Selected dummy code not found in list.');
+      });
+      return;
+    }
+
+    final nQubits = nQubitsController.text;
+    final url =
+        'http://127.0.0.1:8000/download-dummy/$positionalIndex?n_qubits=$nQubits&include_info=true&allow_partial=true';
+
+    setState(() {
+      log.add('>: [Export] Requesting download from: $url');
+    });
+
+    try {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+        setState(() {
+          log.add('>: [Export] ✅ Download initiated successfully.');
+        });
+      } else {
+        setState(() {
+          log.add('>: [Export] ❌ Could not launch URL: $url');
+        });
+      }
+    } catch (e) {
+      setState(() {
+        log.add('>: [Export] ❌ Error occurred during export: $e');
+      });
+    }
   }
 
   // 파일 업로드 테스트를 위한 추가 함수들
