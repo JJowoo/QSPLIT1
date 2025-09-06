@@ -6,19 +6,19 @@ import hashlib
 router = APIRouter()
 
 PART_FILENAME = {
-    "encoder": "StateEncoder6QDummy.py",
+    "se": "StateEncoder6QDummy.py",
     "pqc": "PQC6QDummy.py",
     "mea": "MEA6QDummy.py",
 }
 
 @router.post("/upload-code")
 async def upload_code(
-    part: str = Form(..., description="encoder | pqc | mea"),
+    part: str = Form(..., description="se | pqc | mea"),
     file: UploadFile = File(..., description="Python source file (.py)"),
 ):
     part_key = part.strip().lower()
     if part_key not in PART_FILENAME:
-        raise HTTPException(status_code=400, detail="part must be one of: encoder, pqc, mea")
+        raise HTTPException(status_code=400, detail="part must be one of: se, pqc, mea")
 
 
     if not file.filename.endswith(".py"):
