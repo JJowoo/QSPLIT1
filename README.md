@@ -3,7 +3,7 @@
 
 
 ## **Tool Components**
-![](https://cdn.discordapp.com/attachments/1149758290566324276/1413580984791728210/Fig3_5.png?ex=68bc7361&is=68bb21e1&hm=c14ab1c6fe1d8323752827ade7ba7a90948a7148456835e33bb7e9d758c05bc2&)
+![](https://cdn.discordapp.com/attachments/1149758290566324276/1414476383136125050/Fig3_7.png?ex=68bfb549&is=68be63c9&hm=3076c1dde679941ab1adb2bca8420c06094b35ef72618ac94cc50fe4406d4061&)
 
 ### **A. Part Selection**
 The *Part Selection* section allows users to choose which components of a QNN architecture (**SE, PQC, MEA**) will be provided as **Target Code** and which will be automatically generated as **Dummy Code**.  
