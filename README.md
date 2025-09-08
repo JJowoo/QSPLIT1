@@ -114,13 +114,13 @@ flutter run -d ${web device} # chrome, edge, etc
 ## 5. Compare Results
 
 - *Results* section lists accuracy per combination  
-- Easily identify stable or high-performing combinations  
+- Enabling easy exploration of stable and high-performance combinations  
 
 ---
 
 ## 6. Export Code
 
-- In *Results*, select a dummy code and click **Export** button  
+- select a dummy code and click **Export** button to save dummy code as a `.py` file  
 - Outputs an executable `.py` file compatible with *TorchQuantum*  
 - Enables reuse, extension, and integration into follow-up experiments or deployment  
 
