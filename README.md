@@ -113,7 +113,7 @@ flutter run -d ${web device} # chrome, edge, etc
 
 ## 5. Compare Results
 
-- *Results* section lists accuracy and metrics per combination  
+- *Results* section lists accuracy per combination  
 - Easily identify stable or high-performing combinations  
 
 ---
