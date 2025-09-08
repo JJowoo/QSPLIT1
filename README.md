@@ -86,19 +86,19 @@ flutter run -d ${web device} # chrome, edge, etc
 
 ## 2. Configure Components
 
-- **Upload Target Code**: In *Part Selection*, click **Upload** to provide any subset of SE / PQC / MEA as target code.  
+- **Upload Target Code**: In *Part Selection*, click **Upload** button to provide any subset of SE / PQC / MEA as target code.  
 - **Assign Roles**: Select each component as **Target Code** or **Dummy Code** (radio buttons; mutually exclusive).  
 - **Parameter Input**: In *Target Code Hyperparameter*  
   - *Quantum Device*: number of qubits, batch size, execution device  
   - *Training*: epochs, optimizer, learning rate  
-  - *Dataset*: choose from datasets uploaded to QSPLIT (e.g., MedNIST)  
+  - *Dataset*: Choose from datasets uploaded to QSPLIT (e.g., MedNIST)  
 
 ---
 
 ## 3. Generate Dummy Code
 
 1. Configure parameters in *Target Code Hyperparameter*  
-2. Click **Generate** to create dummy code  
+2. Click **Generate** button to create dummy code  
 3. Inspect in *Dummy Code Generation → Dummy List*  
    - Example: PQC = RY/RZ/CNOT gate stack, MEA = Z observable  
 
@@ -106,7 +106,7 @@ flutter run -d ${web device} # chrome, edge, etc
 
 ## 4. Execute Split Learning
 
-- In *Dummy Code Generation*, click **Run** to start split learning across all combinations  
+- In *Dummy Code Generation*, click **Run** button to start split learning across all combinations  
 - Training uses *TorchQuantum*; per-epoch loss/accuracy are streamed in real time to the GUI  
 
 ---
@@ -120,7 +120,7 @@ flutter run -d ${web device} # chrome, edge, etc
 
 ## 6. Export Code
 
-- In *Results*, select a dummy code and click **Export**  
+- In *Results*, select a dummy code and click **Export** button  
 - Outputs an executable `.py` file compatible with *TorchQuantum*  
 - Enables reuse, extension, and integration into follow-up experiments or deployment  
 
