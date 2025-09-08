@@ -75,8 +75,8 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 ```bash
 # run frontend
-cd Frontend
-flutter run -d chrome
+cd Frontend/lib
+flutter run -d ${modern web browser} # chrome, edge, firefox
 ```
 
 ---
