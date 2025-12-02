@@ -67,19 +67,25 @@ The *Results* section displays the classification accuracy for each combination 
 
 ### 2) Setup
 ```bash
-# create & activate venv (example)
+# Step 1: create & activate venv (example)
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 ```
 ```bash
-# run backend
+# Step 2: run backend
 cd Backend
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 ```bash
-# run frontend
-cd Frontend/lib
-flutter run -d ${web device} # chrome, edge, etc
+# Step 3: Build & Run Frontend
+cd Frontend
+
+# 1. Build Flutter web (generates 'build/web' folder)
+flutter build web --release
+
+# 2. Run web server (Port 8001)
+cd build/web
+python3 -m http.server 8001
 ```
 
 ---
